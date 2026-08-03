@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background:
+    radial-gradient(900px 500px at 20% -10%, rgba(45,156,255,0.10), transparent 60%),
+    radial-gradient(900px 500px at 85% 110%, rgba(247,148,29,0.08), transparent 60%),
+    #050A18;
+  color: #E9EDF5;
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.ticket {
+  background: linear-gradient(180deg, #0C1428, #0A1122);
+  border: 1px solid #1B2438;
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.duo-rule {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #2D9CFF 35%, #F7941D 65%, transparent);
+}
+
+.field {
+  width: 100%; background: #050A18; border: 1px solid #1B2438; border-radius: 10px;
+  padding: 12px 14px; color: #E9EDF5; outline: none; font-size: 15px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.field:focus { border-color: #2D9CFF; box-shadow: 0 0 0 3px rgba(45,156,255,0.18); }
+
+.btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, #2D9CFF, #1565C0);
+  color: #fff; font-weight: 700; border-radius: 10px; padding: 13px 20px; width: 100%;
+  letter-spacing: 0.02em; transition: transform .12s ease, box-shadow .2s ease;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,156,255,0.35); }
+.btn-primary:disabled { opacity: 0.45; transform: none; box-shadow: none; }
+
+.btn-ember {
+  background: linear-gradient(135deg, #FFA733, #F7941D);
+  color: #050A18; font-weight: 700; border-radius: 10px; padding: 13px 20px; width: 100%;
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+.btn-ember:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(247,148,29,0.4); }
+.btn-ember:disabled { opacity: 0.45; transform: none; box-shadow: none; }
+
+.stage { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; }
+
+.orbit-wrap { position: relative; width: 168px; height: 168px; margin: 0 auto; }
+.orbit-wrap img {
+  position: absolute; inset: 22px; width: 124px; height: 124px;
+  border-radius: 24px; object-fit: cover;
+  box-shadow: 0 0 40px rgba(45,156,255,0.25);
+}
+.orbit { position: absolute; inset: 0; border-radius: 50%; border: 2px solid transparent; }
+.orbit-blue {
+  border-top-color: #2D9CFF; border-right-color: rgba(45,156,255,0.25);
+  animation: spin 9s linear infinite;
+}
+.orbit-ember {
+  inset: 9px;
+  border-bottom-color: #F7941D; border-left-color: rgba(247,148,29,0.25);
+  animation: spin-rev 13s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-rev { to { transform: rotate(-360deg); } }
+
+.tape {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  background: rgba(5,10,24,0.85); backdrop-filter: blur(8px);
+  border-bottom: 1px solid #1B2438;
+  overflow: hidden; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  padding: 8px 0;
+}
+.tape-track { display: inline-block; animation: tape-scroll 45s linear infinite; }
+.tape:hover .tape-track { animation-play-state: paused; }
+@keyframes tape-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.tape .q { color: #E9EDF5; margin: 0 14px 0 6px; }
+.tape .a { color: #F7941D; }
+.tape .bullet { color: #2D9CFF; }
+
+.rise { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+.rise-1 { animation-delay: .08s; } .rise-2 { animation-delay: .16s; } .rise-3 { animation-delay: .24s; }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.pulse-ok { animation: pulse-ok 1.6s ease-out infinite; }
+@keyframes pulse-ok {
+  0% { box-shadow: 0 0 0 0 rgba(47,191,113,0.45); }
+  70% { box-shadow: 0 0 0 16px rgba(47,191,113,0); }
+  100% { box-shadow: 0 0 0 0 rgba(47,191,113,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  .tape-track { transform: none; }
+}
