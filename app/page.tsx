@@ -43,6 +43,7 @@ export default function Funnel() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [idCopied, setIdCopied] = useState(false);
 
   async function startRegistration() {
     setError("");
@@ -93,6 +94,13 @@ export default function Funnel() {
     navigator.clipboard.writeText(partnerLink).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
+  function copyId() {
+    navigator.clipboard.writeText(recordId || "").then(() => {
+      setIdCopied(true);
+      setTimeout(() => setIdCopied(false), 2000);
     });
   }
 
@@ -209,8 +217,23 @@ export default function Funnel() {
                 <a href={telegram} target="_blank" rel="noopener noreferrer" className="btn-ember block">
                   Join the Telegram group
                 </a>
+                
+                <div className="duo-rule" />
+                
+                <div className="space-y-2 rounded-lg bg-edge/30 p-4">
+                  <p className="stage text-mist">YOUR REGISTRATION ID</p>
+                  <p className="break-all font-mono text-xs text-electric">{recordId}</p>
+                  <button
+                    onClick={copyId}
+                    className="w-full rounded-lg border border-edge py-2 text-xs text-mist transition-colors hover:border-electric hover:text-electric"
+                  >
+                    {idCopied ? "ID copied ✓" : "Copy for later"}
+                  </button>
+                  <p className="text-xs text-mist">Save this ID to check your application status anytime at <a href="/status" className="text-electric hover:underline">/status</a></p>
+                </div>
+
                 <p className="text-xs italic text-mist">
-                  “Discipline is the bridge between goals and profit.”
+                  "Discipline is the bridge between goals and profit."
                 </p>
               </div>
             )}
