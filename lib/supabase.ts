@@ -1,12 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 
-const URL = process.env.SUPABASE_URL || "https://ikvpozgtzdnvsiprtkbn.supabase.co";
-const KEY =
-  process.env.SUPABASE_ANON_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrdnBvemd0emRudnNpcHJ0a2JuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3Mjg0MzcsImV4cCI6MjEwMTMwNDQzN30.uGiLT5Wty5FmppUAaqsojnjOiuEdM-yZ9ItrNWO28WE";
+const URL = process.env.SUPABASE_URL;
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!URL || !SERVICE_ROLE_KEY) {
+  throw new Error("Missing Supabase environment variables");
+}
 
 export function serverClient() {
-  return createClient(URL, KEY, { auth: { persistSession: false } });
+  return createClient(URL, SERVICE_ROLE_KEY, { auth: { persistSession: false } });
 }
 
 export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Elisha@123";
