@@ -171,7 +171,11 @@ export default function Funnel() {
                 </p>
                 <div className="mx-auto w-fit rounded-xl bg-white p-3 shadow-[0_0_30px_rgba(45,156,255,0.2)]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/qr.jpg" alt="Weltrade registration QR code" className="h-44 w-44" />
+                  <img 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=176x176&data=${encodeURIComponent(partnerLink)}`}
+                    alt="Weltrade registration QR code" 
+                    className="h-44 w-44"
+                  />
                 </div>
                 <div className="space-y-2">
                   <a href={partnerLink} target="_blank" rel="noopener noreferrer" className="btn-primary block">

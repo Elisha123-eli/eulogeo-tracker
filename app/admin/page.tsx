@@ -26,6 +26,8 @@ export default function Admin() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("");
   const [busy, setBusy] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
+  const [resetPassword, setResetPassword] = useState("");
 
   async function load(k: string) {
     setBusy(true);
@@ -57,6 +59,32 @@ export default function Admin() {
       body: JSON.stringify({ id, status }),
     });
     load(key);
+  }
+
+  async function resetAllData() {
+    if (resetPassword !== key) {
+      setError("Wrong password.");
+      return;
+    }
+    if (!window.confirm("⚠️ Are you ABSOLUTELY SURE? This will delete ALL registrations. This cannot be undone.")) {
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      const res = await fetch("/api/admin", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", "x-admin-key": key },
+      });
+      if (!res.ok) throw new Error("Failed to reset data.");
+      setRows([]);
+      setShowResetDialog(false);
+      setResetPassword("");
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
+    }
   }
 
   const filtered = useMemo(
@@ -122,6 +150,51 @@ export default function Admin() {
     );
   }
 
+  if (showResetDialog) {
+    return (
+      <main className="flex min-h-screen items-center justify-center px-4">
+        <div className="ticket w-full max-w-md p-6">
+          <p className="stage text-loss">⚠️ DANGER ZONE</p>
+          <h1 className="mt-2 font-display text-xl font-bold">Reset All Registrations?</h1>
+          <p className="mt-3 text-sm text-mist">
+            This will permanently delete ALL {rows.length} registrations. This action cannot be undone.
+          </p>
+          <div className="mt-4 space-y-2">
+            <label className="stage block text-mist">Enter your admin password to confirm:</label>
+            <input
+              type="password"
+              className="field"
+              placeholder="Admin password"
+              value={resetPassword}
+              onChange={(e) => setResetPassword(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && resetAllData()}
+            />
+          </div>
+          {error && <p className="mt-3 text-sm text-loss">{error}</p>}
+          <div className="mt-6 flex gap-3">
+            <button
+              onClick={() => {
+                setShowResetDialog(false);
+                setResetPassword("");
+                setError("");
+              }}
+              className="flex-1 rounded-lg border border-edge py-2 text-sm text-mist hover:border-electric hover:text-electric"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={resetAllData}
+              disabled={busy || !resetPassword}
+              className="flex-1 rounded-lg bg-loss py-2 text-sm text-obsidian hover:bg-loss/80 disabled:opacity-50"
+            >
+              {busy ? "Resetting…" : "Reset All Data"}
+            </button>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
@@ -135,6 +208,9 @@ export default function Admin() {
           </button>
           <button onClick={exportCsv} className="rounded-lg border border-gold px-4 py-2 text-sm text-gold hover:bg-gold hover:text-obsidian">
             Export CSV
+          </button>
+          <button onClick={() => setShowResetDialog(true)} className="rounded-lg border border-loss px-4 py-2 text-sm text-loss hover:bg-loss hover:text-obsidian">
+            Reset All
           </button>
         </div>
       </div>
