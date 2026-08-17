@@ -27,9 +27,7 @@ export async function POST(req: Request) {
       }
       throw error;
     }
-    return NextResponse.json({
-      telegram: process.env.TELEGRAM_LINK || "https://t.me/+o7sRW23XhrcwZTdk",
-    });
+    return NextResponse.json({ status: "pending" });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: "Server error. Please try again." }, { status: 500 });
