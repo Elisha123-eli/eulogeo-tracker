@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       .maybeSingle();
     if (error) throw error;
     if (!data) return NextResponse.json({ error: "No registration found for that phone number." }, { status: 404 });
-    return NextResponse.json({ data, telegram: process.env.TELEGRAM_LINK || "https://t.me/+o7sRW23XhrcwZTdk" });
+    return NextResponse.json({ data, whatsapp: "https://chat.whatsapp.com/J9uPqBUnDnXEkKuEfTjvnU?s=cl&p=a&mlu=4" });
   } catch (error) {
     console.error("[v0] status lookup failed", error);
     return NextResponse.json({ error: "Server error. Please try again." }, { status: 500 });
