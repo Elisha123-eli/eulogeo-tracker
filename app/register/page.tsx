@@ -39,7 +39,6 @@ export default function Funnel() {
   const [wtId, setWtId] = useState("");
   const [recordId, setRecordId] = useState<string | null>(null);
   const [partnerLink, setPartnerLink] = useState("");
-  const [telegram, setTelegram] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
@@ -92,7 +91,6 @@ export default function Funnel() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not confirm your ID. Try again.");
-      setTelegram(data.telegram);
       setStage(2);
     } catch (e: any) {
       setError(e.message);
@@ -178,7 +176,7 @@ export default function Funnel() {
                 <p className="text-sm leading-relaxed text-mist">
                   Create your Weltrade account using the link or QR code below. After creating it,
                   enter your <span className="text-gold">Weltrade ID number</span> to unlock the
-                  Eulogeo Trading Academy <span className="text-electric">free Telegram group</span>.
+                  Eulogeo Trading Academy <span className="text-electric">free WhatsApp group</span>.
                 </p>
                 <div className="mx-auto w-fit rounded-xl bg-white p-3 shadow-[0_0_30px_rgba(45,156,255,0.2)]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -212,7 +210,7 @@ export default function Funnel() {
                   />
                   {error && <p className="text-sm text-loss">{error}</p>}
                   <button className="btn-ember" onClick={confirmId} disabled={busy || wtId.length < 6}>
-                    {busy ? "Confirming…" : "Unlock Telegram group 🔓"}
+                    {busy ? "Confirming…" : "Submit for approval"}
                   </button>
                 </div>
               </div>
@@ -230,7 +228,7 @@ export default function Funnel() {
                   your journey to disciplined trading begins today.
                 </p>
                 <div className="rounded-lg border border-gold/40 bg-gold/10 p-4 text-sm text-gold">
-                  Your application is pending admin approval. Telegram access will appear here once you are approved.
+                  Your application is pending admin approval. The WhatsApp group link will appear here once you are approved.
                 </div>
                 
                 <div className="duo-rule" />
