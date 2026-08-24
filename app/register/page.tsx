@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { StartOver } from "@/components/start-over";
 
 const STAGES = ["01 DETAILS", "02 EXECUTE", "03 CONFIRM"];
 
@@ -116,6 +117,7 @@ export default function Funnel() {
   return (
     <>
       <Tape />
+      <div className="fixed right-4 top-4 z-20"><StartOver /></div>
       <main className="flex min-h-screen items-center justify-center px-4 pb-10 pt-20">
         <div className="w-full max-w-md">
           <div className="rise mb-5">
